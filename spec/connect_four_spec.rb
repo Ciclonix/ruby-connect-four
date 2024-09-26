@@ -37,7 +37,7 @@ describe ConnectFour do
     context "when there are four vertical identical connected tokens" do
       it "returns true" do
         grid = game.instance_variable_get(:@grid)
-        grid[0] = %i[b a a a a]
+        grid[6] = %i[b a a a a]
         expect(game.checkVerticalFour).to eq(true)
       end
     end
@@ -45,8 +45,27 @@ describe ConnectFour do
     context "when there are no four vertical identical connected tokens" do
       it "returns false" do
         grid = game.instance_variable_get(:@grid)
-        grid[0] = %i[a a a b a]
+        grid[6] = %i[a a a b a]
         expect(game.checkVerticalFour).to eq(false)
+      end
+    end
+  end
+
+  describe "#checkHorizontalFour" do
+    context "when there are four horizontal identical connected tokens" do
+      it "returns true" do
+        grid = game.instance_variable_get(:@grid)
+        (1..4).each { |i| grid[i] << :x }
+        expect(game.checkHorizontalFour).to eq(true)
+      end
+    end
+
+    context "when there are no four horizontal identical connected tokens" do
+      it "returns false" do
+        grid = game.instance_variable_get(:@grid)
+        (0..2).each { |i| grid[i] << :x }
+        grid[4] << :x
+        expect(game.checkHorizontalFour).to eq(false)
       end
     end
   end
