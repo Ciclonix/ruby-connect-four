@@ -126,6 +126,7 @@ describe ConnectFour do
 
     context "when the first player wins" do
       before do
+        allow(game).to receive(:printGrid)
         allow(game).to receive(:turn)
         allow(game).to receive(:checkWin).and_return(true)
       end
@@ -137,6 +138,7 @@ describe ConnectFour do
 
     context "when the second player wins" do
       before do
+        allow(game).to receive(:printGrid)
         allow(game).to receive(:turn)
         allow(game).to receive(:checkWin).and_return(false, true)
         allow(game).to receive(:gridFull?).and_return(false)
@@ -149,6 +151,7 @@ describe ConnectFour do
 
     context "when the grid is full" do
       before do
+        allow(game).to receive(:printGrid)
         allow(game).to receive(:turn)
         allow(game).to receive(:checkWin).and_return(false)
         allow(game).to receive(:gridFull?).and_return(true)
