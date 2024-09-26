@@ -128,7 +128,7 @@ describe ConnectFour do
       before do
         allow(game).to receive(:printGrid)
         allow(game).to receive(:turn)
-        allow(game).to receive(:checkWin).and_return(true)
+        allow(game).to receive(:isWin?).and_return(true)
       end
 
       it "returns the first player" do
@@ -140,7 +140,7 @@ describe ConnectFour do
       before do
         allow(game).to receive(:printGrid)
         allow(game).to receive(:turn)
-        allow(game).to receive(:checkWin).and_return(false, true)
+        allow(game).to receive(:isWin?).and_return(false, true)
         allow(game).to receive(:gridFull?).and_return(false)
       end
 
@@ -153,7 +153,7 @@ describe ConnectFour do
       before do
         allow(game).to receive(:printGrid)
         allow(game).to receive(:turn)
-        allow(game).to receive(:checkWin).and_return(false)
+        allow(game).to receive(:isWin?).and_return(false)
         allow(game).to receive(:gridFull?).and_return(true)
       end
 
