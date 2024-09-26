@@ -35,8 +35,7 @@ class ConnectFour
   def checkHorizontalFour
     6.times do |column_id|
       horizontal_line = @grid.map { |column| column[column_id] }
-      4.times do |line_id|
-        slice = horizontal_line[line_id..line_id + 3]
+      horizontal_line.each_cons(4) do |slice|
         return true if !slice[0].nil? && slice.uniq.size == 1
       end
     end
