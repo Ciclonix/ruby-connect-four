@@ -89,17 +89,19 @@ class ConnectFour
   end
 
   def inputPlayers
+    player1 = {}
+    player2 = {}
     print "Player 1, choose a name: "
     player1[:id] = gets.chomp
-    player1[:symbol] = "⚪"
+    player1[:symbol] = "◉"
     print "Player 2, choose a name: "
     player2[:id] = gets.chomp
-    player2[:symbol] = "⚫"
+    player2[:symbol] = "◎"
     return [player1, player2]
   end
 
   def turn(player)
-    print "Player #{player[:id]} choose column: "
+    print "Player #{player[:id]}, choose column: "
     column_id = gets.chomp
     raise ArgumentError unless addToken(column_id.to_i, player[:symbol])
   rescue ArgumentError
@@ -108,19 +110,18 @@ class ConnectFour
   end
 
   def play(players)
-    # printGrid
+    printGrid
     loop do
       players.each do |player|
         turn(player)
+        printGrid
         return player if isWin?
         return nil if gridFull?
-
-        # printGrid
       end
     end
   end
 
-  def startGame
+  def newGame
     winner = play(inputPlayers)
     if winner.nil?
       puts "Draw!"
@@ -128,4 +129,21 @@ class ConnectFour
       puts "Congratulations! Player #{winner[:id]} won!"
     end
   end
+
+  def printGrid
+    puts "\n  0   1   2   3   4   5   6"
+    6.times do |line_id|
+      line_id = 5 - line_id
+      line = "| "
+      @grid.each do |column|
+        line += column[line_id].nil? ? " " : column[line_id].to_s
+        line += " | "
+      end
+      puts line
+    end
+    puts "⎺" * 29
+  end
 end
+
+# a = ConnectFour.new
+# a.newGame
