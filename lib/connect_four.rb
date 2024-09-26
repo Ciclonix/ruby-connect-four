@@ -10,6 +10,11 @@ class ConnectFour
   end
 
   def addToken(column_id, token)
+    unless column_id.between?(0, 6)
+      puts "error: invalid column"
+      return false
+    end
+
     if @grid[column_id].length == 6
       puts "This column is full, try another"
       return false
@@ -72,5 +77,55 @@ class ConnectFour
       end
     end
     return false
+  end
+
+  def isWin?
+    return checkVerticalFour || checkHorizontalFour || checkDiagonalFour
+  end
+
+  def gridFull?
+    lengths = @grid.map(&:length).uniq
+    return lengths[0] == 6 && lengths.size == 1
+  end
+
+  def inputPlayers
+    print "Player 1, choose a name: "
+    player1[:id] = gets.chomp
+    player1[:symbol] = "⚪"
+    print "Player 2, choose a name: "
+    player2[:id] = gets.chomp
+    player2[:symbol] = "⚫"
+    return [player1, player2]
+  end
+
+  def turn(player)
+    print "Player #{player[:id]} choose column: "
+    column_id = gets.chomp
+    raise ArgumentError unless addToken(column_id.to_i, player[:symbol])
+  rescue ArgumentError
+    puts "error: invalid column"
+    retry
+  end
+
+  def play(players)
+    # printGrid
+    loop do
+      players.each do |player|
+        turn(player)
+        return player if isWin?
+        return nil if gridFull?
+
+        # printGrid
+      end
+    end
+  end
+
+  def startGame
+    winner = play(inputPlayers)
+    if winner.nil?
+      puts "Draw!"
+    else
+      puts "Congratulations! Player #{winner[:id]} won!"
+    end
   end
 end
