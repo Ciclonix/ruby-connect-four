@@ -69,4 +69,28 @@ describe ConnectFour do
       end
     end
   end
+
+  describe "#checkDiagonalFour" do
+    context "when there are four diagonal identical connected tokens" do
+      it "returns true" do
+        grid = game.instance_variable_get(:@grid)
+        grid[1] = %i[x]
+        grid[2] = %i[y x]
+        grid[3] = %i[y y x]
+        grid[4] = %i[y x x x]
+        expect(game.checkDiagonalFour).to eq(true)
+      end
+    end
+
+    context "when there are no four diagonal identical connected tokens" do
+      it "returns false" do
+        grid = game.instance_variable_get(:@grid)
+        grid[1] = %i[x]
+        grid[2] = %i[y x]
+        grid[3] = %i[x y x]
+        grid[4] = %i[x x y y x]
+        expect(game.checkDiagonalFour).to eq(false)
+      end
+    end
+  end
 end
